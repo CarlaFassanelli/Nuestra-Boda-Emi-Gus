@@ -20,22 +20,6 @@ const adminPasswordHash = process.env.ADMIN_PASSWORD_HASH;
 const sessionSecret = process.env.SESSION_SECRET;
 const appOrigin = process.env.APP_ORIGIN;
 
-if (!Number.isInteger(port) || port < 1 || port > 65535) {
-  throw new Error('PORT debe ser un puerto válido.');
-}
-if (!adminEmail || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(adminEmail)) {
-  throw new Error('Configurá un ADMIN_EMAIL válido.');
-}
-if (!adminPasswordHash || bcrypt.getRounds(adminPasswordHash) < 12) {
-  throw new Error('Configurá ADMIN_PASSWORD_HASH con un hash bcrypt de al menos 12 rondas usando npm run hash-password.');
-}
-if (!sessionSecret || sessionSecret.length < 48) {
-  throw new Error('SESSION_SECRET debe contener al menos 48 caracteres aleatorios.');
-}
-if (!appOrigin) {
-  throw new Error('Configurá APP_ORIGIN (por ejemplo, http://localhost:3000).');
-}
-
 app.set('trust proxy', process.env.NODE_ENV === 'production' ? 1 : false);
 app.disable('x-powered-by');
 app.use(helmet({
@@ -57,14 +41,16 @@ app.use(helmet({
   crossOriginResourcePolicy: { policy: 'cross-origin' }
 }));
 app.use(express.json({ limit: '20kb', strict: true }));
-app.use(cookieSession({
-  name: 'emiygus_admin',
-  keys: [sessionSecret],
-  maxAge: 8 * 60 * 60 * 1000,
-  httpOnly: true,
-  secure: process.env.NODE_ENV === 'production',
-  sameSite: 'strict'
-}));
+if (sessionSecret && sessionSecret.length >= 48) {
+  app.use(cookieSession({
+    name: 'emiygus_admin',
+    keys: [sessionSecret],
+    maxAge: 8 * 60 * 60 * 1000,
+    httpOnly: true,
+    secure: process.env.NODE_ENV === 'production',
+    sameSite: 'strict'
+  }));
+}
 
 function sameOrigin(req, res, next) {
   const origin = req.get('origin');
@@ -137,6 +123,12 @@ app.use('/api/public/songs', publicFormLimiter);
 app.use('/api/auth/login', sameOrigin, loginLimiter);
 app.use('/api/auth/logout', sameOrigin);
 app.use('/api', (req, res, next) => {
+  try {
+    validateBackendConfiguration();
+  } catch (error) {
+    res.status(503).json({ error: error.message });
+    return;
+  }
   initializeBackend().then(() => next(), next);
 });
 app.use('/api', router);
@@ -168,6 +160,30 @@ async function ensureAdminUser() {
 }
 
 let backendInitialization;
+
+function validateBackendConfiguration() {
+  if (!Number.isInteger(port) || port < 1 || port > 65535) {
+    throw new Error('Configurá PORT con un puerto válido.');
+  }
+  if (!adminEmail || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(adminEmail)) {
+    throw new Error('Configurá ADMIN_EMAIL con un correo válido.');
+  }
+  if (!adminPasswordHash || bcrypt.getRounds(adminPasswordHash) < 12) {
+    throw new Error('Configurá ADMIN_PASSWORD_HASH con un hash bcrypt de al menos 12 rondas usando npm run hash-password.');
+  }
+  if (!sessionSecret || sessionSecret.length < 48) {
+    throw new Error('Configurá SESSION_SECRET con al menos 48 caracteres aleatorios.');
+  }
+  if (!appOrigin) {
+    throw new Error('Configurá APP_ORIGIN con el origen exacto del sitio (por ejemplo, https://tu-dominio.vercel.app).');
+  }
+  if (!process.env.SPIDER_WEB_DATABASE) {
+    throw new Error('Configurá SPIDER_WEB_DATABASE.');
+  }
+  if (!process.env.SPIDER_WEB_API_KEY) {
+    throw new Error('Configurá SPIDER_WEB_API_KEY.');
+  }
+}
 
 function initializeBackend() {
   if (!backendInitialization) {

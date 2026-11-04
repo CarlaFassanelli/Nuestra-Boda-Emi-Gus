@@ -25,3 +25,5 @@ Para configurar el panel, generá un hash con `npm run hash-password` y guardá 
 5. Hacé el deploy y comprobá la invitación, la identificación de invitados, el envío de RSVP y el acceso a `/admin`.
 
 La inicialización de la base se ejecuta de forma diferida al recibir solicitudes de la API, por lo que la función de Vercel no depende de un proceso de servidor permanente. Los datos se guardan en Spider-Web, no en el sistema de archivos efímero de Vercel. No publiques `.env` ni cargues credenciales o datos bancarios en GitHub; configurá los valores reales como variables de entorno en Vercel.
+
+La página de la invitación puede servirse aunque todavía falte la configuración de la API. Si una búsqueda de invitado, confirmación o acceso al panel falla por variables ausentes, el endpoint devuelve un mensaje explícito con el nombre de la variable que hay que configurar.

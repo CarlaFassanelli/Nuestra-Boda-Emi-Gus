@@ -1,20 +1,15 @@
 const API_BASE_URL = process.env.SPIDER_WEB_BASE_URL || 'https://spiderwebargapi.com.ar/api/v1';
-const DATABASE = process.env.SPIDER_WEB_DATABASE;
-const API_KEY = process.env.SPIDER_WEB_API_KEY;
-
-if (!DATABASE) {
-  throw new Error('Falta configurar SPIDER_WEB_DATABASE.');
-}
-
-if (!API_KEY) {
-  throw new Error('Falta configurar SPIDER_WEB_API_KEY. Creá una API Key restringida a la base indicada en SPIDER_WEB_DATABASE.');
-}
 
 async function request(path, options = {}) {
+  const apiKey = process.env.SPIDER_WEB_API_KEY;
+  if (!apiKey) {
+    throw new Error('Falta configurar SPIDER_WEB_API_KEY. Creá una API Key restringida a la base indicada en SPIDER_WEB_DATABASE.');
+  }
+
   const response = await fetch(`${API_BASE_URL}${path}`, {
     ...options,
     headers: {
-      'X-API-Key': API_KEY,
+      'X-API-Key': apiKey,
       Accept: 'application/json',
       ...options.headers
     },
@@ -38,10 +33,15 @@ async function request(path, options = {}) {
 }
 
 async function query(sql, params = []) {
+  const database = process.env.SPIDER_WEB_DATABASE;
+  if (!database) {
+    throw new Error('Falta configurar SPIDER_WEB_DATABASE.');
+  }
+
   const payload = await request('/query', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ database: DATABASE, query: sql, params })
+    body: JSON.stringify({ database, query: sql, params })
   });
 
   if (!Object.prototype.hasOwnProperty.call(payload, 'result')) {
@@ -60,7 +60,12 @@ async function rows(sql, params = []) {
 }
 
 async function ensureSchema() {
-  const payload = await request(`/databases/${encodeURIComponent(DATABASE)}/tables`);
+  const database = process.env.SPIDER_WEB_DATABASE;
+  if (!database) {
+    throw new Error('Falta configurar SPIDER_WEB_DATABASE.');
+  }
+
+  const payload = await request(`/databases/${encodeURIComponent(database)}/tables`);
   const tables = payload.tables || payload.result;
 
   if (!Array.isArray(tables)) {
@@ -77,7 +82,6 @@ async function ensureSchema() {
 }
 
 module.exports = {
-  DATABASE,
   query,
   rows,
   ensureSchema
