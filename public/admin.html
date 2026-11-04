@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#F7F3EC">
+  <title>Panel privado | E y G</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Allura&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/admin-assets/admin.css?v=editorial-20261104b">
+  <script src="/admin-assets/admin.js" defer></script>
+</head>
+<body>
+  <main class="auth-screen" id="loginScreen" hidden>
+    <form class="auth-card" id="loginForm">
+      <a class="brand-mark" href="/" aria-label="Volver a la invitación">E<span>y</span>G</a>
+      <p class="auth-date">04 DE DICIEMBRE DE 2026</p>
+      <div class="brand-divider" aria-hidden="true"><span></span><i>✦</i><span></span></div>
+      <p class="eyebrow">ACCESO PRIVADO</p>
+      <h1>Panel de los novios</h1>
+      <p class="auth-intro">Gestioná con tranquilidad las confirmaciones y los detalles de este día tan especial.</p>
+      <label for="loginEmail">Correo electrónico</label>
+      <input id="loginEmail" name="email" type="email" autocomplete="username" required>
+      <label for="loginPassword">Contraseña</label>
+      <input id="loginPassword" name="password" type="password" autocomplete="current-password" required>
+      <button class="button button-primary" type="submit" id="loginButton">Ingresar</button>
+      <p class="feedback" id="loginFeedback" role="status" aria-live="polite"></p>
+      <a class="back-link" href="/">Volver a la invitación</a>
+    </form>
+  </main>
+
+  <div class="admin-layout" id="adminApp" hidden>
+    <aside class="sidebar">
+      <a class="brand-mark" href="/" aria-label="E y G">E<span>y</span>G</a>
+      <p class="sidebar-caption">GESTIÓN DE INVITADOS</p>
+      <nav class="main-nav" aria-label="Secciones del panel">
+        <button type="button" class="nav-link active" data-view="overview"><span>01</span> Resumen</button>
+        <button type="button" class="nav-link" data-view="guests"><span>02</span> Invitados</button>
+        <button type="button" class="nav-link" data-view="confirmations"><span>03</span> Confirmaciones</button>
+        <button type="button" class="nav-link" data-view="songs"><span>04</span> Canciones</button>
+      </nav>
+      <div class="sidebar-bottom">
+        <a class="back-link" href="/">← Ver invitación</a>
+        <button type="button" class="text-button" id="logoutButton">Cerrar sesión</button>
+      </div>
+    </aside>
+
+    <main class="main-content">
+      <header class="topbar">
+        <div>
+          <p class="eyebrow">E y G · 04.12.2026</p>
+          <h1 id="pageTitle">Resumen</h1>
+        </div>
+        <p class="account-label" id="accountLabel"></p>
+      </header>
+      <div class="global-feedback" id="globalFeedback" role="status" aria-live="polite"></div>
+
+      <section class="view-panel active" id="view-overview" aria-labelledby="pageTitle">
+        <div class="stats-grid">
+          <article class="stat-card"><span>Grupos invitados</span><strong id="statGroups">—</strong></article>
+          <article class="stat-card"><span>Personas previstas</span><strong id="statPeople">—</strong></article>
+          <article class="stat-card"><span>Personas confirmadas</span><strong id="statConfirmed">—</strong></article>
+          <article class="stat-card"><span>Grupos pendientes</span><strong id="statPending">—</strong></article>
+          <article class="stat-card"><span>No asisten</span><strong id="statDeclined">—</strong></article>
+          <article class="stat-card"><span>Canciones recibidas</span><strong id="statSongs">—</strong></article>
+        </div>
+        <section class="content-card">
+          <div class="card-heading">
+            <div><p class="eyebrow">ÚLTIMOS MOVIMIENTOS</p><h2>Respuestas recientes</h2></div>
+            <button type="button" class="button button-secondary" data-go-view="confirmations">Ver confirmaciones</button>
+          </div>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>Invitado</th><th>Respuesta</th><th>Personas</th><th>Fecha</th></tr></thead>
+              <tbody id="activityRows"></tbody>
+            </table>
+          </div>
+          <p class="empty-state" id="activityEmpty" hidden>Aún no hay respuestas registradas.</p>
+        </section>
+      </section>
+
+      <section class="view-panel" id="view-guests" aria-labelledby="pageTitle" hidden>
+        <section class="content-card">
+          <div class="card-heading">
+            <div><p class="eyebrow">LISTA PRIVADA</p><h2>Invitados</h2></div>
+            <div class="toolbar-actions">
+              <button type="button" class="button button-secondary" data-export="guests">Exportar CSV</button>
+              <button type="button" class="button button-primary" id="addGuestButton">Agregar invitado</button>
+            </div>
+          </div>
+          <div class="filters">
+            <label class="search-control">Buscar<input type="search" id="guestSearch" placeholder="Nombre o apellido"></label>
+            <label>Estado
+              <select id="guestStatus">
+                <option value="">Todos</option><option>Pendiente</option><option>Confirmado</option><option>No asiste</option>
+              </select>
+            </label>
+            <div class="export-links" aria-label="Exportar listados">
+              <button type="button" class="text-button" data-export="pending">Pendientes</button>
+              <button type="button" class="text-button" data-export="declined">No asisten</button>
+            </div>
+          </div>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>Grupo / invitado</th><th>Personas</th><th>Confirmadas</th><th>Estado</th><th>Contacto</th><th>Acciones</th></tr></thead>
+              <tbody id="guestRows"></tbody>
+            </table>
+          </div>
+          <p class="empty-state" id="guestsEmpty" hidden>No hay invitados que coincidan con la búsqueda.</p>
+        </section>
+      </section>
+
+      <section class="view-panel" id="view-confirmations" aria-labelledby="pageTitle" hidden>
+        <section class="content-card">
+          <div class="card-heading">
+            <div><p class="eyebrow">RESPUESTAS DEL FORMULARIO</p><h2>Confirmaciones</h2></div>
+            <button type="button" class="button button-secondary" data-export="confirmations">Exportar CSV</button>
+          </div>
+          <div class="filters">
+            <label class="search-control">Buscar<input type="search" id="confirmationSearch" placeholder="Nombre o apellido"></label>
+            <label>Asistencia
+              <select id="confirmationStatus">
+                <option value="">Todas</option><option>Confirmado</option><option>No asiste</option>
+              </select>
+            </label>
+          </div>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>Nombre</th><th>Asistencia</th><th>Personas</th><th>Fecha</th></tr></thead>
+              <tbody id="confirmationRows"></tbody>
+            </table>
+          </div>
+          <p class="empty-state" id="confirmationsEmpty" hidden>No hay confirmaciones que coincidan con el filtro.</p>
+        </section>
+      </section>
+
+      <section class="view-panel" id="view-songs" aria-labelledby="pageTitle" hidden>
+        <section class="content-card">
+          <div class="card-heading">
+            <div><p class="eyebrow">PLAYLIST DE LA FIESTA</p><h2>Canciones sugeridas</h2></div>
+            <button type="button" class="button button-secondary" data-export="songs">Exportar CSV</button>
+          </div>
+          <div class="filters">
+            <label class="search-control">Buscar<input type="search" id="songSearch" placeholder="Canción, artista o invitado"></label>
+          </div>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>Canción</th><th>Artista</th><th>Invitado</th><th>Comentario</th><th>Favorita</th><th>Escuchada</th><th>Acciones</th></tr></thead>
+              <tbody id="songRows"></tbody>
+            </table>
+          </div>
+          <p class="empty-state" id="songsEmpty" hidden>Aún no hay canciones sugeridas.</p>
+        </section>
+      </section>
+    </main>
+  </div>
+
+  <dialog class="guest-dialog" id="guestDialog">
+    <form id="guestForm" method="dialog">
+      <div class="card-heading">
+        <div><p class="eyebrow">GESTIÓN DE INVITADOS</p><h2 id="guestDialogTitle">Agregar invitado</h2></div>
+        <button type="button" class="icon-button" id="closeGuestDialog" aria-label="Cerrar">×</button>
+      </div>
+      <input type="hidden" name="id" id="guestId">
+      <label>Nombre y apellido<input name="nombreCompleto" id="guestName" maxlength="201" required></label>
+      <div class="form-grid">
+        <label>Personas invitadas<input name="cantidadInvitada" id="guestInvited" type="number" min="1" max="20" required></label>
+        <label>Confirmadas<input name="cantidadConfirmada" id="guestConfirmed" type="number" min="0" max="20" value="0" required></label>
+      </div>
+      <div class="form-grid">
+        <label>Estado<select name="estado" id="guestState" required><option>Pendiente</option><option>Confirmado</option><option>No asiste</option></select></label>
+        <label>Teléfono<input name="telefono" id="guestPhone" maxlength="40" type="tel"></label>
+      </div>
+      <label>Acompañantes<input name="acompanantes" id="guestCompanions" maxlength="500"></label>
+      <label>Observaciones<textarea name="observaciones" id="guestNotes" rows="3" maxlength="1000"></textarea></label>
+      <p class="feedback" id="guestFeedback" role="status" aria-live="polite"></p>
+      <div class="dialog-actions">
+        <button type="button" class="button button-secondary" id="cancelGuestButton">Cancelar</button>
+        <button type="submit" class="button button-primary" id="saveGuestButton">Guardar</button>
+      </div>
+    </form>
+  </dialog>
+</body>
+</html>

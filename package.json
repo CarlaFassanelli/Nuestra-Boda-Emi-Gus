@@ -1,0 +1,25 @@
+{
+  "name": "emilce-gustavo-wedding",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Invitación digital y panel privado de Emilce & Gustavo",
+  "main": "app.js",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "start": "node server/app.js",
+    "dev": "node --watch server/app.js",
+    "seed:guests": "node scripts/seed-guests.js",
+    "hash-password": "node scripts/hash-password.js",
+    "check": "node --check app.js && node --check server/app.js && node --check server/spiderWebService.js && node --check server/routes.js && node --check js/main.js && node --check public/admin.js"
+  },
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "cookie-session": "^2.1.0",
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
+    "express-rate-limit": "^7.5.0",
+    "helmet": "^8.0.0"
+  }
+}

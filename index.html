@@ -1,0 +1,919 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Emilce &amp; Gustavo — Nuestra Boda | 04.12.26</title>
+  <meta name="description" content="Invitación de boda de Emilce y Gustavo. 04 de diciembre de 2026. ¡Celebrá este gran día con nosotros!">
+  <meta name="theme-color" content="#F7F3EC">
+  <link rel="icon" type="image/jpeg" href="assets/emiygus.jpeg?v=1">
+  <link rel="apple-touch-icon" href="assets/emiygus.jpeg?v=1">
+
+  <!-- Tipografías de Alta Gama para Bodas -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Allura&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="css/styles.css?v=responsive-20261104c">
+  
+  <!-- Preload de recursos críticos -->
+  <link rel="preload" as="image" href="assets/frames/frame_00.jpg">
+  <link rel="preload" as="image" href="assets/emiygus.jpeg">
+</head>
+<body class="envelope-active">
+
+  <!-- ============================================
+       AUDIO DE BODA (HTML5 Nativo)
+       ============================================ -->
+  <audio id="wedding-audio" src="assets/musica.mp3" preload="auto" playsinline></audio>
+
+  <!-- ============================================
+       IDENTIFICACIÓN DEL GRUPO INVITADO
+       ============================================ -->
+  <section id="guest-gate" class="guest-gate" aria-labelledby="guest-gate-title">
+    <div class="guest-gate-card">
+      <p class="guest-gate-names">Emilce <span>y</span> Gustavo</p>
+      <p class="guest-gate-date">04 DE DICIEMBRE DE 2026</p>
+      <div class="guest-gate-divider" aria-hidden="true">
+        <span></span><span class="guest-gate-sparkle">✦</span><span></span>
+      </div>
+
+      <div id="guest-lookup-view">
+        <h1 id="guest-gate-title" class="guest-gate-title">¡Tenemos una invitación especial para vos!</h1>
+        <p class="guest-gate-intro">Ingresá tu nombre y apellido para encontrar tu invitación</p>
+        <form id="guest-lookup-form" class="guest-lookup-form">
+          <label class="visually-hidden" for="guest-lookup-name">Nombre y apellido</label>
+          <input
+            id="guest-lookup-name"
+            name="nombreCompleto"
+            type="text"
+            placeholder="Nombre y apellido"
+            autocomplete="name"
+            autocapitalize="words"
+            maxlength="201"
+            required
+          >
+          <button type="submit" id="guest-lookup-button" class="guest-gate-button">
+            Encontrar mi invitación
+          </button>
+          <p id="guest-lookup-feedback" class="guest-gate-feedback" role="status" aria-live="polite"></p>
+          <button type="button" id="guest-lookup-retry" class="guest-gate-retry" hidden>Volver a intentar</button>
+        </form>
+      </div>
+
+      <div id="guest-welcome-view" class="guest-welcome-view" hidden>
+        <h1 class="guest-gate-title" id="guest-welcome-title"></h1>
+        <p class="guest-gate-intro">
+          Tu invitación está destinada a <strong id="guest-welcome-capacity"></strong>
+          <span id="guest-welcome-people-label">personas</span>.
+        </p>
+        <button type="button" id="guest-continue-button" class="guest-gate-button">
+          Continuar con mi invitación
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================
+       PANTALLA 1: SOBRE DE BODA INTERACTIVO
+       ============================================ -->
+  <div id="envelope-scene" role="region" aria-label="Presentación del sobre" hidden>
+    
+    <!-- Partículas y destellos sutiles de fondo -->
+    <div class="ambient-glow" aria-hidden="true"></div>
+
+    <div class="envelope-card-wrapper">
+      <div class="envelope-photo" id="envelope-photo">
+        <!-- Escenario 3D del sobre gatefold (puertas batientes laterales) -->
+        <div class="gatefold-stage" id="gatefold-stage" aria-hidden="true">
+          <!-- Tarjeta interior en el centro con la foto de Emilce & Gustavo enmarcada -->
+          <div class="gatefold-interior-card" id="gatefold-interior-card">
+            <div class="card-photo-box">
+              <img src="assets/emiygus.jpeg" alt="Emilce &amp; Gustavo" class="card-inner-photo">
+              <div class="card-photo-gradient"></div>
+              <div class="card-inner-frame"></div>
+              <div class="card-photo-text">
+                <span class="card-sub">NOS CASAMOS</span>
+                <span class="card-names">
+                  <span>Emilce</span>
+                  <span class="hero-amp">&amp;</span>
+                  <span>Gustavo</span>
+                </span>
+                <span class="card-date">04 . 12 . 2026</span>
+                <div class="hero-leaf-doodle" aria-hidden="true">
+                  <svg viewBox="0 0 60 16" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round">
+                    <path d="M2 8 C15 8, 20 2, 30 8 C40 14, 45 8, 58 8"/>
+                    <path d="M22 6 C24 3, 27 3, 26 6"/>
+                    <path d="M26 10 C28 13, 31 13, 30 10"/>
+                    <path d="M34 6 C36 3, 39 3, 38 6"/>
+                  </svg>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Puerta batiente izquierda (se abre hacia el costado izquierdo) -->
+          <div class="gatefold-door door-left" id="door-left">
+            <div class="door-flipper">
+              <div class="door-face door-front">
+                <div class="door-shadow"></div>
+              </div>
+              <div class="door-face door-back"></div>
+            </div>
+          </div>
+
+          <!-- Puerta batiente derecha (con flores en relieve, se abre hacia la derecha) -->
+          <div class="gatefold-door door-right" id="door-right">
+            <div class="door-flipper">
+              <div class="door-face door-front">
+                <div class="door-shadow"></div>
+              </div>
+              <div class="door-face door-back"></div>
+            </div>
+          </div>
+
+          <!-- Capa de la cinta para el deslizamiento físico al desatarse -->
+          <div class="envelope-ribbon-slide" id="envelope-ribbon-slide"></div>
+        </div>
+
+        <!-- Canvas que reproduce los 35 fotogramas realistas del desatado de satén -->
+        <canvas id="envelope-canvas" width="547" height="763" class="envelope-canvas" aria-label="Sobre con lazo de satén"></canvas>
+        
+        <!-- Botón interactivo central sobre el nudo -->
+        <button id="knot-trigger" class="knot-trigger" aria-label="Tocar el moño para desatar la invitación" title="Tocá el moño para desatar"></button>
+      </div>
+
+      <!-- Indicador elegante de apertura -->
+      <div class="open-label" id="open-label">
+        <p class="open-hint" id="open-hint">
+          <span class="hint-sparkle">✦</span> Tocá el moño para desatar <span class="hint-sparkle">✦</span>
+        </p>
+      </div>
+    </div>
+
+  </div>
+
+
+  <!-- ============================================
+       PANTALLA 2: INTERIOR DE LA INVITACIÓN
+       ============================================ -->
+  <main id="invitation" class="invitation-editorial">
+
+    <div class="invitation-container">
+
+      <div class="card-sheet">
+
+        <!-- Acuarelas botánicas decorativas en las 4 esquinas -->
+        <div class="botanical-corner botanical-corner-tl" aria-hidden="true">
+          <img src="assets/botanical-corner.jpg" alt="" loading="lazy">
+        </div>
+        <div class="botanical-corner botanical-corner-tr" aria-hidden="true">
+          <img src="assets/botanical-corner.jpg" alt="" loading="lazy">
+        </div>
+        <div class="botanical-corner botanical-corner-bl" aria-hidden="true">
+          <img src="assets/botanical-corner.jpg" alt="" loading="lazy">
+        </div>
+        <div class="botanical-corner botanical-corner-br" aria-hidden="true">
+          <img src="assets/botanical-corner.jpg" alt="" loading="lazy">
+        </div>
+
+        <!-- Marcos dorados perimetrales -->
+        <div class="inner-frame-outer" aria-hidden="true"></div>
+        <div class="inner-frame-inner" aria-hidden="true"></div>
+
+        <!-- ========================================
+             1. PORTADA — HERO FOTO CON TEXTO OVERLAY (ESTILO LUCIA & JUAN)
+             ======================================== -->
+        <header class="editorial-cover section-reveal">
+          
+          <!-- Hero foto pareja con overlay de texto -->
+          <div class="hero-photo-overlay">
+
+            <!-- Botón Play/Pausa de Música (Esquina superior izquierda de la foto) -->
+            <button id="music-toggle" class="photo-music-btn" type="button" aria-label="Reproducir o pausar música" title="Música">
+              <svg class="music-icon-play" viewBox="0 0 24 24" fill="currentColor">
+                <polygon points="8,5 19,12 8,19"></polygon>
+              </svg>
+              <svg class="music-icon-pause" viewBox="0 0 24 24" fill="currentColor">
+                <rect x="6" y="5" width="4" height="14" rx="1"></rect>
+                <rect x="14" y="5" width="4" height="14" rx="1"></rect>
+              </svg>
+            </button>
+            <a class="admin-access-heart" href="/admin" aria-label="Acceso privado de los novios" title="Acceso privado">♥</a>
+
+            <img src="assets/emiygus.jpeg" alt="Emilce y Gustavo" class="emiygus" loading="eager">
+            <div class="hero-overlay-gradient"></div>
+            
+            <div class="hero-text-overlay">
+              <span class="hero-subtitle">NOS CASAMOS</span>
+              <h1 class="hero-names-script">
+                <span>Emilce</span>
+                <span class="hero-amp">&amp;</span>
+                <span>Gustavo</span>
+              </h1>
+              <p class="hero-date-overlay">04 . 12 . 2026</p>
+              <div class="hero-leaf-doodle" aria-hidden="true">
+                <svg viewBox="0 0 60 16" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round">
+                  <path d="M2 8 C15 8, 20 2, 30 8 C40 14, 45 8, 58 8"/>
+                  <path d="M22 6 C24 3, 27 3, 26 6"/>
+                  <path d="M26 10 C28 13, 31 13, 30 10"/>
+                  <path d="M34 6 C36 3, 39 3, 38 6"/>
+                </svg>
+              </div>
+            </div>
+
+            <!-- Transición curva orgánica moderna al pie de la foto -->
+            <div class="hero-photo-transition" aria-hidden="true">
+              <svg viewBox="0 0 1200 68" preserveAspectRatio="none">
+                <!-- Sombra suave artesanal de profundidad -->
+                <path d="M0,26 C300,52 640,10 940,42 C1070,52 1160,32 1200,36 L1200,68 L0,68 Z" fill="rgba(197, 160, 89, 0.18)"/>
+                <!-- Capa principal del papel crema -->
+                <path d="M0,32 C320,58 660,16 960,48 C1080,56 1170,38 1200,42 L1200,68 L0,68 Z" fill="var(--bg-card-cream)"/>
+                <!-- Delicado filete dorado en el pliegue del papel -->
+                <path d="M0,32 C320,58 660,16 960,48 C1080,56 1170,38 1200,42" fill="none" stroke="rgba(197, 160, 89, 0.5)" stroke-width="1.8"/>
+              </svg>
+            </div>
+          </div>
+
+          <!-- Cita romántica (debajo de la foto) -->
+          <div class="cover-quote-wrap">
+            <p class="cover-quote-intro">
+              Hay momentos en la vida que son inolvidables, y compartirlos con quienes más amamos los hace eternos.
+            </p>
+
+            <div class="cover-verse-block">
+              <p class="cover-verse-phrase">El amor nunca pasará.</p>
+              <span class="cover-verse-ref">1 CORINTIOS 13:8</span>
+            </div>
+
+          </div>
+
+          <!-- Separador con corazón delicado (en lugar de eso floral) -->
+          <div class="editorial-divider editorial-divider-heart" aria-hidden="true">
+            <img src="assets/Corazón dorado.png" alt="" class="divider-art divider-heart">
+          </div>
+        </header>
+
+
+        <!-- ========================================
+             2. CUENTA REGRESIVA (DULCE ESPERA)
+             ======================================== -->
+        <section class="section-countdown section-reveal" id="cuenta-regresiva">
+          <div class="countdown-card">
+            <div class="section-header">
+              <span class="section-eyebrow">✦ DULCE ESPERA ✦</span>
+              <h2 class="section-title">¿Cuánto falta?</h2>
+            </div>
+
+            <div class="countdown-grid" id="countdown-timer">
+              <div class="countdown-box">
+                <span class="countdown-number" id="cd-d">00</span>
+                <span class="countdown-label">DÍAS</span>
+              </div>
+              <span class="countdown-dot">✦</span>
+              <div class="countdown-box">
+                <span class="countdown-number" id="cd-h">00</span>
+                <span class="countdown-label">HORAS</span>
+              </div>
+              <span class="countdown-dot">✦</span>
+              <div class="countdown-box">
+                <span class="countdown-number" id="cd-m">00</span>
+                <span class="countdown-label">MIN</span>
+              </div>
+              <span class="countdown-dot">✦</span>
+              <div class="countdown-box">
+                <span class="countdown-number" id="cd-s">00</span>
+                <span class="countdown-label">SEG</span>
+              </div>
+            </div>
+
+            <!-- Botón para Agendar en Google Calendar -->
+            <div class="calendar-action-wrap">
+              <a href="https://calendar.google.com/calendar/render?action=TEMPLATE&text=Boda+de+Emilce+%26+Gustavo&dates=20261204T140000Z/20261205T080000Z&details=¡Nos+casamos!+Celebración+de+la+Boda+de+Emilce+y+Gustavo.&location=San+Carlos,+Mendoza" target="_blank" rel="noopener" class="btn-luxe btn-luxe-outline" id="calendarBtn">
+                <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                  <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                  <line x1="16" y1="2" x2="16" y2="6"></line>
+                  <line x1="8" y1="2" x2="8" y2="6"></line>
+                  <line x1="3" y1="10" x2="21" y2="10"></line>
+                </svg>
+                <span>AGENDAR EN MI CALENDARIO</span>
+              </a>
+            </div>
+          </div><!-- /.countdown-card -->
+
+          <!-- Separador con corazón delicado (en lugar de eso floral) -->
+          <div class="editorial-divider editorial-divider-heart" aria-hidden="true">
+            <img src="assets/Corazón dorado.png" alt="" class="divider-art divider-heart">
+          </div>
+        </section>
+
+
+        <!-- ========================================
+             3. ITINERARIO DE ACTIVIDADES (LÍNEA DE TIEMPO)
+             ======================================== -->
+        <section class="section-itinerary-timeline section-reveal" id="itinerario">
+          <div class="itinerary-card">
+            <div class="section-header">
+              <span class="section-eyebrow">✦ CRONOGRAMA ✦</span>
+              <h2 class="section-title italic-calligraphy">Itinerario de actividades</h2>
+            </div>
+
+            <!-- Recorrido curvo con horarios y eventos alternados -->
+            <div class="timeline-vertical" aria-label="Cronograma de la boda">
+              <svg class="timeline-spine" viewBox="0 0 100 492" preserveAspectRatio="none" aria-hidden="true">
+                <path d="M66 41 C66 82 35 82 35 123 C35 164 61 164 61 205 C61 246 38 246 38 287 C38 328 63 328 63 369 C63 410 40 410 40 451"/>
+                <g class="timeline-spine-nodes">
+                  <ellipse cx="66" cy="41" rx="1" ry="3"/>
+                  <ellipse cx="35" cy="123" rx="1" ry="3"/>
+                  <ellipse cx="61" cy="205" rx="1" ry="3"/>
+                  <ellipse cx="38" cy="287" rx="1" ry="3"/>
+                  <ellipse cx="63" cy="369" rx="1" ry="3"/>
+                  <ellipse cx="40" cy="451" rx="1" ry="3"/>
+                </g>
+              </svg>
+              
+              <!-- Hito 1: Civil (11:00 hs) -->
+              <div class="timeline-row">
+                <div class="timeline-time-col">
+                  <span class="timeline-time">11:00 hs</span>
+                </div>
+                <div class="timeline-badge-col">
+                  <div class="timeline-badge" aria-hidden="true">
+                    <!-- Icono Anillos de Matrimonio -->
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round">
+                      <circle cx="9" cy="12" r="5"></circle>
+                      <circle cx="15" cy="12" r="5"></circle>
+                    </svg>
+                  </div>
+                </div>
+                <div class="timeline-info-col">
+                  <span class="timeline-event">REGISTRO CIVIL</span>
+                </div>
+              </div>
+
+              <!-- Hito 2: Iglesia (19:00 hs) -->
+              <div class="timeline-row">
+                <div class="timeline-time-col">
+                  <span class="timeline-time">19:00 hs</span>
+                </div>
+                <div class="timeline-badge-col">
+                  <div class="timeline-badge" aria-hidden="true">
+                    <!-- Icono Iglesia -->
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M12 2v3M10.5 3.5h3"/>
+                      <path d="M12 5l-7 5.5v9.5h14v-9.5L12 5z"/>
+                      <path d="M10 20v-5a2 2 0 0 1 4 0v5"/>
+                      <circle cx="12" cy="10" r="1.5"/>
+                    </svg>
+                  </div>
+                </div>
+                <div class="timeline-info-col">
+                  <span class="timeline-event">IGLESIA</span>
+                </div>
+              </div>
+
+              <!-- Hito 3: Cóctel de Bienvenida (20:15 hs) -->
+              <div class="timeline-row">
+                <div class="timeline-time-col">
+                  <span class="timeline-time">20:15 hs</span>
+                </div>
+                <div class="timeline-badge-col">
+                  <div class="timeline-badge" aria-hidden="true">
+                    <!-- Icono Copas Brindis -->
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M8 3l1.5 6a3 3 0 0 0 3 2.5h0M8 3h4M9.5 9v12M6.5 21h6"/>
+                      <path d="M16 3l-1.5 6a3 3 0 0 1-3 2.5h0M16 3h-4M14.5 9v12M11.5 21h6"/>
+                      <path d="M12 2v2M10 1.5l1 1M14 1.5l-1 1"/>
+                    </svg>
+                  </div>
+                </div>
+                <div class="timeline-info-col">
+                  <span class="timeline-event">CÓCTEL DE BIENVENIDA</span>
+                </div>
+              </div>
+
+              <!-- Hito 4: Entrada de los Novios (21:00 hs) -->
+              <div class="timeline-row">
+                <div class="timeline-time-col">
+                  <span class="timeline-time">21:00 hs</span>
+                </div>
+                <div class="timeline-badge-col">
+                  <div class="timeline-badge" aria-hidden="true">
+                    <!-- Icono Pareja Bailando Vals -->
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round">
+                      <circle cx="9.5" cy="4.5" r="1.8"/>
+                      <circle cx="14.5" cy="5.5" r="1.8"/>
+                      <path d="M9 6.5l-2 5.5 3 2v6"/>
+                      <path d="M13 7.5c1 1.2 2.5 1.5 3.5 1.2l-.7 4.3-2.3 7"/>
+                      <path d="M9.5 11l2.5 2.5 1.5-2.5"/>
+                      <path d="M13.5 13c1.5 1 3.5 3 4 7h-7"/>
+                    </svg>
+                  </div>
+                </div>
+                <div class="timeline-info-col">
+                  <span class="timeline-event">ENTRADA DE LOS NOVIOS</span>
+                </div>
+              </div>
+
+              <!-- Hito 5: Baile (00:00 hs) -->
+              <div class="timeline-row">
+                <div class="timeline-time-col">
+                  <span class="timeline-time">00:00 hs</span>
+                </div>
+                <div class="timeline-badge-col">
+                  <div class="timeline-badge" aria-hidden="true">
+                    <!-- Icono Bola de Boliche / Discoteca -->
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round">
+                      <circle cx="12" cy="13" r="7"/>
+                      <path d="M12 2v4"/>
+                      <ellipse cx="12" cy="13" rx="4" ry="7"/>
+                      <line x1="5" y1="13" x2="19" y2="13"/>
+                      <line x1="6.5" y1="9.5" x2="17.5" y2="9.5"/>
+                      <line x1="6.5" y1="16.5" x2="17.5" y2="16.5"/>
+                      <path d="M3 7l1 1M21 7l-1 1M4 19l1-1M20 19l-1-1"/>
+                    </svg>
+                  </div>
+                </div>
+                <div class="timeline-info-col">
+                  <span class="timeline-event">BAILE</span>
+                </div>
+              </div>
+
+              <!-- Hito 6: Fin (05:00 hs) -->
+              <div class="timeline-row">
+                <div class="timeline-time-col">
+                  <span class="timeline-time">05:00 hs</span>
+                </div>
+                <div class="timeline-badge-col">
+                  <div class="timeline-badge" aria-hidden="true">
+                    <!-- Icono Reloj -->
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round">
+                      <circle cx="12" cy="12" r="8.5"/>
+                      <polyline points="12 7 12 12 15.5 14"/>
+                    </svg>
+                  </div>
+                </div>
+                <div class="timeline-info-col">
+                  <span class="timeline-event">FIN</span>
+                </div>
+              </div>
+
+            </div><!-- /.timeline-vertical -->
+          </div><!-- /.itinerary-card -->
+
+          <!-- Separador con corazón delicado (en lugar de eso floral) -->
+          <div class="editorial-divider editorial-divider-heart" aria-hidden="true">
+            <img src="assets/Corazón dorado.png" alt="" class="divider-art divider-heart">
+          </div>
+        </section>
+
+
+        <!-- ========================================
+             4. UBICACIONES & BOTONES CÓMO LLEGAR
+             ======================================== -->
+        <section class="section-locations section-reveal" id="ubicaciones">
+          <div class="locations-card-outer">
+            <div class="section-header">
+              <span class="section-eyebrow">✦ DÓNDE &amp; CUÁNDO ✦</span>
+              <h3 class="section-title">Ubicaciones</h3>
+            </div>
+
+            <div class="locations-cards-section">
+              <!-- CIVIL -->
+              <article class="event-card event-card-civil section-reveal" id="ceremonia-civil">
+                <div class="event-card-inner">
+                  <span class="event-category">PASO A PASO</span>
+                  <h4 class="event-name">Ceremonia Civil</h4>
+
+                  <div class="event-meta-grid">
+                    <div class="meta-item">
+                      <span class="meta-text">
+                        <span class="meta-label">FECHA &amp; HORA</span>
+                        <span class="meta-val">Viernes 30 de Noviembre • 11:00 hs</span>
+                      </span>
+                    </div>
+                    <div class="meta-item">
+                      <span class="meta-text">
+                        <span class="meta-label">LUGAR</span>
+                        <span class="meta-val">Registro Civil - San Carlos</span>
+                      </span>
+                    </div>
+                  </div>
+
+                  <div class="event-action">
+                    <a href="https://maps.google.com/?q=Registro+Civil+San+Carlos+Mendoza" target="_blank" rel="noopener" class="btn-luxe btn-luxe-gold">
+                      <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M12 21s-7-4.35-7-10a7 7 0 1 1 14 0c0 5.65-7 10-7 10z"/>
+                        <circle cx="12" cy="11" r="2.5"/>
+                      </svg>
+                      <span>CÓMO LLEGAR AL CIVIL</span>
+                    </a>
+                  </div>
+                </div>
+              </article>
+
+              <!-- IGLESIA -->
+              <article class="event-card event-card-religiosa section-reveal" id="ceremonia-religiosa">
+                <div class="event-card-inner">
+                  <span class="event-category">BENDICIÓN NUPCIAL</span>
+                  <h4 class="event-name">Ceremonia Religiosa</h4>
+
+                  <div class="event-meta-grid">
+                    <div class="meta-item">
+                      <span class="meta-text">
+                        <span class="meta-label">FECHA &amp; HORA</span>
+                        <span class="meta-val">Viernes 04 de Diciembre • 19:00 hs</span>
+                      </span>
+                    </div>
+                    <div class="meta-item">
+                      <span class="meta-text">
+                        <span class="meta-label">LUGAR</span>
+                        <span class="meta-val">Parroquia San Juan Bosco</span>
+                        <span class="meta-sub">Eugenio Bustos, San Carlos</span>
+                      </span>
+                    </div>
+                  </div>
+
+                  <div class="event-action">
+                    <a href="https://maps.google.com/?q=Parroquia+San+Juan+Bosco+Eugenio+Bustos+Mendoza" target="_blank" rel="noopener" class="btn-luxe btn-luxe-gold">
+                      <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M12 21s-7-4.35-7-10a7 7 0 1 1 14 0c0 5.65-7 10-7 10z"/>
+                        <circle cx="12" cy="11" r="2.5"/>
+                      </svg>
+                      <span>CÓMO LLEGAR A LA IGLESIA</span>
+                    </a>
+                  </div>
+                </div>
+              </article>
+
+              <!-- FIESTA -->
+              <article class="event-card event-card-fiesta section-reveal" id="fiesta">
+                <div class="event-card-inner">
+                  <span class="event-category">GRAN CELEBRACIÓN</span>
+                  <h4 class="event-name">La Fiesta</h4>
+
+                  <div class="event-meta-grid">
+                    <div class="meta-item">
+                      <span class="meta-text">
+                        <span class="meta-label">HORA</span>
+                        <span class="meta-val">20:00 hs</span>
+                      </span>
+                    </div>
+                    <div class="meta-item">
+                      <span class="meta-text">
+                        <span class="meta-label">LUGAR</span>
+                        <span class="meta-val">Notamadera</span>
+                        <span class="meta-sub">C. El Indio, Eugenio Bustos</span>
+                      </span>
+                    </div>
+                  </div>
+
+                  <div class="event-action">
+                    <a href="https://maps.google.com/?q=Notamadera+C.+El+Indio+Eugenio+Bustos+Mendoza" target="_blank" rel="noopener" class="btn-luxe btn-luxe-primary">
+                      <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M12 21s-7-4.35-7-10a7 7 0 1 1 14 0c0 5.65-7 10-7 10z"/>
+                        <circle cx="12" cy="11" r="2.5"/>
+                      </svg>
+                      <span>CÓMO LLEGAR A LA FIESTA</span>
+                    </a>
+                  </div>
+                </div>
+              </article>
+            </div><!-- /.locations-cards-section -->
+          </div><!-- /.locations-card-outer -->
+
+          <!-- Separador con corazón delicado (en lugar de eso floral) -->
+          <div class="editorial-divider editorial-divider-heart" aria-hidden="true">
+            <img src="assets/Corazón dorado.png" alt="" class="divider-art divider-heart">
+          </div>
+        </section>
+
+
+        <!-- ========================================
+             4. CALENDARIO EDITORIAL DICIEMBRE 2026
+             ======================================== -->
+        <section class="section-calendar section-reveal" id="calendario">
+          <div class="calendar-card">
+            <div class="calendar-header">
+              <div class="cal-title-wrap">
+                <svg class="cal-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                  <rect x="3" y="4" width="18" height="18" rx="2.5" ry="2.5"></rect>
+                  <line x1="16" y1="2" x2="16" y2="6"></line>
+                  <line x1="8" y1="2" x2="8" y2="6"></line>
+                  <line x1="3" y1="10" x2="21" y2="10"></line>
+                </svg>
+                <span class="cal-month-title">DICIEMBRE 2026</span>
+              </div>
+              <span class="cal-badge-nupcial">✦ FECHA ESPECIAL ✦</span>
+            </div>
+
+            <div class="cal-weekdays">
+              <span>L</span><span>M</span><span>M</span><span>J</span><span>V</span><span class="cal-weekend">S</span><span class="cal-weekend">D</span>
+            </div>
+
+            <div class="cal-days-grid">
+              <!-- Diciembre 2026 inicia Martes 1 -->
+              <span class="cal-day-empty"></span>
+              <span class="cal-day">1</span>
+              <span class="cal-day">2</span>
+              <span class="cal-day">3</span>
+              <!-- Viernes 4: Día de la Boda -->
+              <span class="cal-day cal-day-highlight" title="¡El día de nuestra Boda!">
+                <span class="cal-day-num">4</span>
+                <span class="cal-heart-glow" aria-hidden="true">♥</span>
+              </span>
+              <span class="cal-day">5</span>
+              <span class="cal-day">6</span>
+              <span class="cal-day">7</span>
+              <span class="cal-day">8</span>
+              <span class="cal-day">9</span>
+              <span class="cal-day">10</span>
+              <span class="cal-day">11</span>
+              <span class="cal-day">12</span>
+              <span class="cal-day">13</span>
+              <span class="cal-day">14</span>
+              <span class="cal-day">15</span>
+              <span class="cal-day">16</span>
+              <span class="cal-day">17</span>
+              <span class="cal-day">18</span>
+              <span class="cal-day">19</span>
+              <span class="cal-day">20</span>
+              <span class="cal-day">21</span>
+              <span class="cal-day">22</span>
+              <span class="cal-day">23</span>
+              <span class="cal-day">24</span>
+              <span class="cal-day">25</span>
+              <span class="cal-day">26</span>
+              <span class="cal-day">27</span>
+              <span class="cal-day">28</span>
+              <span class="cal-day">29</span>
+              <span class="cal-day">30</span>
+              <span class="cal-day">31</span>
+            </div>
+          </div>
+
+          <!-- Separador con corazón delicado (en lugar de eso floral) -->
+          <div class="editorial-divider editorial-divider-heart" aria-hidden="true">
+            <img src="assets/Corazón dorado.png" alt="" class="divider-art divider-heart">
+          </div>
+        </section>
+
+
+        <!-- ========================================
+             5. CÓDIGO DE VESTIMENTA (DRESS CODE)
+             ======================================== -->
+        <section class="section-dresscode section-reveal" id="dress-code">
+          <div class="dresscode-card">
+            <div class="dresscode-icon-wrap">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M20.38 3.46L16 2a4 4 0 01-8 0L3.62 3.46a2 2 0 00-1.34 2.23l.58 3.47a1 1 0 00.99.84H6v10a2 2 0 002 2h8a2 2 0 002-2V10h2.15a1 1 0 00.99-.84l.58-3.47a2 2 0 00-1.34-2.23z"/>
+              </svg>
+            </div>
+            
+            <span class="section-eyebrow">✦ DRESS CODE ✦</span>
+            <h3 class="dresscode-title">Elegante / Formal</h3>
+            <p class="dresscode-desc">
+              Vení listo para lucirte, disfrutar y bailar toda la noche junto a nosotros.
+            </p>
+
+            <div class="dresscode-lookbook" aria-label="Ilustraciones de vestimenta formal">
+              <figure class="dresscode-look dresscode-look-suit">
+                <svg class="dresscode-fashion-sketch" viewBox="0 0 180 210" fill="none" aria-hidden="true">
+                  <path d="M66 27 44 38 25 78l19 11 11-22v96h70V67l11 22 19-11-19-40-22-11-24 18-24-18Z" fill="#F7F3EC" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
+                  <path d="m66 27 5 41 19-23-8 71 8 8 8-8-8-71 19 23 5-41M44 38l22-11m43 0 22 11M55 68l-6 10m76-10 6 10" stroke="#C7A46A" stroke-width="1.35" stroke-linecap="round" stroke-linejoin="round"/>
+                  <path d="M88 132v24m0-16h.1m-.1 8h.1" stroke="#806B5C" stroke-width="2.3" stroke-linecap="round"/>
+                  <path d="M77 27h26" stroke="#806B5C" stroke-width="1.3" stroke-linecap="round"/>
+                </svg>
+              </figure>
+              <figure class="dresscode-look dresscode-look-gown">
+                <svg class="dresscode-fashion-sketch" viewBox="0 0 180 210" fill="none" aria-hidden="true">
+                  <path d="M72 30h36l-4 32 17 10 31 88c-38 15-86 15-124 0l31-88 17-10-4-32Z" fill="#FFFEFB" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
+                  <path d="m72 30 18 32 18-32M73 62l-16 67m50-67 16 67M59 102c19 9 43 9 62 0M51 150c24 8 54 8 78 0" stroke="#C7A46A" stroke-width="1.35" stroke-linecap="round" stroke-linejoin="round"/>
+                  <path d="M80 31c0-6 4-10 10-10s10 4 10 10M90 63v20" stroke="#806B5C" stroke-width="1.3" stroke-linecap="round"/>
+                  <path d="M84 91c4 3 8 3 12 0" stroke="#806B5C" stroke-width="1.2" stroke-linecap="round"/>
+                </svg>
+                
+              </figure>
+            </div>
+          </div>
+
+        </section>
+
+
+        <!-- ========================================
+             6. PLAYLIST DE LA BODA (SUGERIR CANCIÓN)
+             ======================================== -->
+        <section class="section-playlist section-reveal" id="playlist">
+          <div class="playlist-card">
+            
+            <div class="playlist-vinyl-wrap" aria-hidden="true">
+              <div class="vinyl-disc">
+                <div class="vinyl-groove"></div>
+                <div class="vinyl-center">
+                  <span class="vinyl-note">♪</span>
+                </div>
+              </div>
+            </div>
+
+            <span class="section-eyebrow">✦ MÚSICA &amp; FIESTA ✦</span>
+            <h3 class="playlist-title">¿Qué canción no puede faltar?</h3>
+            <p class="playlist-desc">
+              Queremos que la fiesta sea inolvidable y bailar hasta el amanecer. Dejanos esa canción que te hace moverte sí o sí.
+            </p>
+
+            <form class="playlist-form" id="playlistForm">
+              <input type="hidden" id="playlistSubmissionKey" name="submissionKey">
+              <div class="playlist-field">
+                <label for="playlistSong" class="playlist-label">NOMBRE DE LA CANCIÓN *</label>
+                <div class="input-with-icon">
+                  <span class="input-icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M9 18V5l12-2v13"/>
+                      <circle cx="6" cy="18" r="3"/>
+                      <circle cx="18" cy="16" r="3"/>
+                    </svg>
+                  </span>
+                  <input type="text" id="playlistSong" class="playlist-input" placeholder="Ej: Vivir Mi Vida, La Morocha..." required autocomplete="off">
+                </div>
+              </div>
+
+              <div class="playlist-field">
+                <label for="playlistArtist" class="playlist-label">ARTISTA O BANDA *</label>
+                <div class="input-with-icon">
+                  <span class="input-icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                      <rect x="9" y="2" width="6" height="12" rx="3"/>
+                      <path d="M5 10v2a7 7 0 0 0 14 0v-2M12 19v3M8 22h8"/>
+                    </svg>
+                  </span>
+                  <input type="text" id="playlistArtist" class="playlist-input" placeholder="Ej: Marc Anthony, Luck Ra..." required autocomplete="off">
+                </div>
+              </div>
+
+              <button type="submit" id="btnSuggestSong" class="btn-luxe btn-playlist-submit">
+                <svg class="btn-icon" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/>
+                </svg>
+                <span>ENVIAR SUGERENCIA</span>
+              </button>
+
+              <div id="playlistFeedback" class="playlist-feedback" aria-live="polite"></div>
+            </form>
+          </div>
+
+          <!-- Separador con corazón delicado (en lugar de eso floral) -->
+          <div class="editorial-divider editorial-divider-heart" aria-hidden="true">
+            <img src="assets/Corazón dorado.png" alt="" class="divider-art divider-heart">
+          </div>
+        </section>
+
+
+        <!-- ========================================
+             7. REGALOS & MUESTRA DE CARIÑO
+             ======================================== -->
+        <section class="section-gifts section-reveal" id="regalos">
+          <div class="gifts-card">
+            <div class="gifts-icon-wrap">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="20 12 20 22 4 22 4 12"></polyline>
+                <rect x="2" y="7" width="20" height="5"></rect>
+                <line x1="12" y1="22" x2="12" y2="7"></line>
+                <path d="M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7z"></path>
+                <path d="M12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z"></path>
+              </svg>
+            </div>
+
+            <span class="section-eyebrow">✦ REGALOS ✦</span>
+            <h3 class="gifts-title">Muestra de Cariño</h3>
+            <p class="gifts-desc">
+              Tu presencia es nuestro mayor regalo. Si deseás hacernos un presente para nuestro nuevo hogar y luna de miel, podés hacerlo a través de nuestra cuenta:
+            </p>
+
+            <div class="bank-details-box">
+              <div class="bank-details-heading">
+                <span class="bank-heading-index" aria-hidden="true">01</span>
+                <span class="bank-heading-label">DATOS DE LA CUENTA</span>
+                <span class="bank-heading-rule" aria-hidden="true"></span>
+              </div>
+              <div class="bank-row">
+                <span class="bank-label">ALIAS:</span>
+                <span class="bank-value" id="aliasValue">__GIFT_ALIAS__</span>
+              </div>
+              <div class="bank-row">
+                <span class="bank-label">CBU:</span>
+                <span class="bank-value" id="cbuValue">__GIFT_CBU__</span>
+              </div>
+
+              <button class="btn-copy-bank" id="copyBankBtn" type="button" aria-label="Copiar datos bancarios">
+                <svg class="copy-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                  <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                </svg>
+                <span id="copyBankText" aria-live="polite">COPIAR DATOS BANCARIOS</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Separador con corazón delicado (en lugar de eso floral) -->
+          <div class="editorial-divider editorial-divider-heart" aria-hidden="true">
+            <img src="assets/Corazón dorado.png" alt="" class="divider-art divider-heart">
+          </div>
+        </section>
+
+
+        <!-- ========================================
+             8. CONFIRMACIÓN DE ASISTENCIA (RSVP)
+             ======================================== -->
+        <section class="section-rsvp section-reveal" id="rsvp">
+          <div class="rsvp-card-box">
+            
+            <div class="rsvp-flower-badge">
+              <svg viewBox="0 0 24 24" fill="currentColor">
+                <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+              </svg>
+            </div>
+
+            <span class="section-eyebrow">✦ CELEBREMOS JUNTOS ✦</span>
+            <h2 class="section-title">¿Nos acompañás?</h2>
+
+            <p class="rsvp-curated-text">
+              Nos haría muy felices compartir este día con vos. Contanos si vas a acompañarnos para preparar cada detalle con mucho cariño.
+            </p>
+            <p id="rsvp-guest-summary" class="rsvp-guest-summary" hidden></p>
+
+            <form class="rsvp-form" id="rsvpForm">
+              <input type="hidden" id="rsvpSubmissionKey" name="submissionKey">
+              <div class="rsvp-field">
+                <label for="rsvpAttendance">¿Vas a poder venir?</label>
+                <select id="rsvpAttendance" name="asistencia" required>
+                  <option value="">Elegí una opción</option>
+                  <option value="Confirmado">Sí, ahí estaré</option>
+                  <option value="No asiste">Esta vez no podré ir</option>
+                </select>
+              </div>
+              <div class="rsvp-field" id="rsvpPeopleField" hidden>
+                <label for="rsvpPeople">¿Cuántos asistirán?</label>
+                <input id="rsvpPeople" name="cantidadPersonas" type="number" min="1" max="10" value="1" inputmode="numeric">
+                <small id="rsvp-people-hint">Contate en el total.</small>
+              </div>
+             
+              <button type="submit" id="rsvpSubmitBtn" class="btn-rsvp-luxury">
+                <span class="rsvp-wa-bubble" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1.1-1.1a5.5 5.5 0 0 0-7.8 7.8l1.1 1.1L12 21l7.8-7.5 1.1-1.1a5.5 5.5 0 0 0-.1-7.8Z"/>
+                  </svg>
+                </span>
+                <span class="rsvp-btn-labels">
+                  <span class="rsvp-btn-main">ENVIAR MI RESPUESTA</span>
+                  <span class="rsvp-btn-sub">¡Qué lindo compartirlo!</span>
+                </span>
+                <span class="rsvp-arrow" aria-hidden="true">
+                  <svg class="rsvp-arrow-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                    <polyline points="12 5 19 12 12 19"></polyline>
+                  </svg>
+                </span>
+              </button>
+              <div id="rsvpFeedback" class="rsvp-feedback" aria-live="polite"></div>
+            </form>
+
+            <div class="rsvp-deadline-badge">
+              <svg class="rsvp-deadline-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="3" y="4" width="18" height="18" rx="2.5" ry="2.5"></rect>
+                <line x1="16" y1="2" x2="16" y2="6"></line>
+                <line x1="8" y1="2" x2="8" y2="6"></line>
+                <line x1="3" y1="10" x2="21" y2="10"></line>
+              </svg>
+              <span class="rsvp-deadline-hint">
+                <span>Confirmá antes del</span>
+                <strong>20 de noviembre de 2026</strong>
+              </span>
+            </div>
+
+          </div>
+        </section>
+
+
+        <!-- ========================================
+             9. MONOGRAMA & FOOTER EDITORIAL
+             ======================================== -->
+        <footer class="editorial-footer section-reveal">
+          <div class="footer-monogram-wrap">
+            <span class="monogram-letter">E</span>
+            <span class="monogram-amp">&amp;</span>
+            <span class="monogram-letter">G</span>
+          </div>
+
+          <p class="footer-blessing">¡Te esperamos para celebrar nuestro amor!</p>
+          <p class="footer-date">04 DE DICIEMBRE DE 2026</p>
+        </footer>
+
+      </div><!-- /.card-sheet -->
+
+    </div><!-- /.invitation-container -->
+
+  </main>
+
+  <script src="js/main.js?v=host-access-20261104b"></script>
+</body>
+</html>
