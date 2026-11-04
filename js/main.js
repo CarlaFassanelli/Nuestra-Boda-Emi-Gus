@@ -28,9 +28,17 @@ document.addEventListener('DOMContentLoaded', () => {
   const guestContinueButton = document.getElementById('guest-continue-button');
   const rsvpGuestSummary = document.getElementById('rsvp-guest-summary');
   const rsvpPeople = document.getElementById('rsvpPeople');
+  const rsvpPeopleDecrease = document.getElementById('rsvpPeopleDecrease');
+  const rsvpPeopleIncrease = document.getElementById('rsvpPeopleIncrease');
   const rsvpPeopleHint = document.getElementById('rsvp-people-hint');
   let identifiedGuestName = '';
   const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  function updateRsvpPeopleControls() {
+    const value = Number(rsvpPeople.value);
+    rsvpPeopleDecrease.disabled = !Number.isFinite(value) || value <= Number(rsvpPeople.min);
+    rsvpPeopleIncrease.disabled = !Number.isFinite(value) || value >= Number(rsvpPeople.max);
+  }
 
   // Lock scroll during envelope presentation
   document.body.classList.add('envelope-active');
@@ -58,6 +66,7 @@ document.addEventListener('DOMContentLoaded', () => {
       rsvpPeople.max = String(capacity);
       rsvpPeople.value = '1';
       rsvpPeopleHint.textContent = `Incluite en el total. El máximo es ${capacity} ${capacity === 1 ? 'persona' : 'personas'}.`;
+      updateRsvpPeopleControls();
     }
   }
 
@@ -535,12 +544,27 @@ document.addEventListener('DOMContentLoaded', () => {
 
   if (rsvpForm) {
     rsvpSubmissionKey.value = newSubmissionKey();
+    const adjustPeopleCount = (amount) => {
+      const current = Number(rsvpPeople.value);
+      const minimum = Number(rsvpPeople.min);
+      const maximum = Number(rsvpPeople.max);
+      const next = Number.isFinite(current) ? current + amount : minimum;
+      rsvpPeople.value = String(Math.max(minimum, Math.min(maximum, next)));
+      updateRsvpPeopleControls();
+    };
+
+    rsvpPeopleDecrease.addEventListener('click', () => adjustPeopleCount(-1));
+    rsvpPeopleIncrease.addEventListener('click', () => adjustPeopleCount(1));
+    rsvpPeople.addEventListener('input', updateRsvpPeopleControls);
+    updateRsvpPeopleControls();
+
     rsvpAttendance.addEventListener('change', () => {
       const attending = rsvpAttendance.value === 'Confirmado';
       rsvpPeopleField.hidden = !attending;
       rsvpPeople.required = attending;
       if (!attending) rsvpPeople.value = '0';
       else if (Number(rsvpPeople.value) < 1) rsvpPeople.value = '1';
+      updateRsvpPeopleControls();
     });
 
     rsvpForm.addEventListener('submit', async (event) => {
@@ -561,6 +585,7 @@ document.addEventListener('DOMContentLoaded', () => {
         rsvpForm.reset();
         rsvpPeopleField.hidden = true;
         rsvpPeople.required = false;
+        updateRsvpPeopleControls();
         rsvpSubmissionKey.value = newSubmissionKey();
       } catch (error) {
         console.error('No se pudo guardar la confirmación de asistencia:', error);

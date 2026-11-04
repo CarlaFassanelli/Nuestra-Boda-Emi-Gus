@@ -853,7 +853,11 @@
               </div>
               <div class="rsvp-field" id="rsvpPeopleField" hidden>
                 <label for="rsvpPeople">¿Cuántos asistirán?</label>
-                <input id="rsvpPeople" name="cantidadPersonas" type="number" min="1" max="10" value="1" inputmode="numeric">
+                <div class="rsvp-quantity-control" role="group" aria-label="Cantidad de personas">
+                  <button type="button" class="rsvp-quantity-button" id="rsvpPeopleDecrease" aria-label="Disminuir cantidad" aria-controls="rsvpPeople">−</button>
+                  <input id="rsvpPeople" name="cantidadPersonas" type="number" min="1" max="10" step="1" value="1" inputmode="numeric">
+                  <button type="button" class="rsvp-quantity-button" id="rsvpPeopleIncrease" aria-label="Aumentar cantidad" aria-controls="rsvpPeople">+</button>
+                </div>
                 <small id="rsvp-people-hint">Contate en el total.</small>
               </div>
              
