@@ -81,7 +81,9 @@ function sendCsv(res, filename, columns, data) {
 
 router.post('/public/guest/identify', asyncRoute(async (req, res) => {
   const fullName = text(req.body.nombreCompleto, 'Nombre y apellido', 201, true);
-  const guests = await rows('SELECT id, nombre_completo, cantidad_invitada FROM invitados');
+  const guests = await rows(
+    'SELECT i.id, i.nombre_completo, i.cantidad_invitada, EXISTS (SELECT 1 FROM confirmaciones c WHERE c.invitado_id = i.id) AS ya_confirmo FROM invitados i'
+  );
   const matches = guests.filter((guest) => normalizeName(guest.nombre_completo) === normalizeName(fullName));
 
   if (matches.length > 1) {
@@ -112,7 +114,8 @@ router.post('/public/guest/identify', asyncRoute(async (req, res) => {
   res.json({
     guest: {
       nombreCompleto: guest.nombre_completo,
-      cantidadInvitada: Number(guest.cantidad_invitada)
+      cantidadInvitada: Number(guest.cantidad_invitada),
+      yaConfirmo: Number(guest.ya_confirmo) === 1
     }
   });
 }));
@@ -124,7 +127,7 @@ router.get('/public/guest/current', asyncRoute(async (req, res) => {
   }
 
   const guests = await rows(
-    'SELECT id, nombre_completo, cantidad_invitada FROM invitados WHERE id = ? LIMIT 1',
+    'SELECT i.id, i.nombre_completo, i.cantidad_invitada, EXISTS (SELECT 1 FROM confirmaciones c WHERE c.invitado_id = i.id) AS ya_confirmo FROM invitados i WHERE i.id = ? LIMIT 1',
     [req.session.guestId]
   );
   const guest = guests[0];
@@ -137,7 +140,8 @@ router.get('/public/guest/current', asyncRoute(async (req, res) => {
   res.json({
     guest: {
       nombreCompleto: guest.nombre_completo,
-      cantidadInvitada: Number(guest.cantidad_invitada)
+      cantidadInvitada: Number(guest.cantidad_invitada),
+      yaConfirmo: Number(guest.ya_confirmo) === 1
     }
   });
 }));
@@ -170,6 +174,18 @@ router.post('/public/rsvp', asyncRoute(async (req, res) => {
   const existing = await rows('SELECT id FROM confirmaciones WHERE submission_key = ? LIMIT 1', [submissionKey]);
   if (existing.length) {
     res.json({ ok: true, duplicate: true, linked: true });
+    return;
+  }
+
+  const previousResponses = await rows(
+    'SELECT id FROM confirmaciones WHERE invitado_id = ? LIMIT 1',
+    [guest.id]
+  );
+  if (previousResponses.length) {
+    res.status(409).json({
+      code: 'already_confirmed',
+      error: 'Esta invitación ya tiene una respuesta registrada.'
+    });
     return;
   }
 

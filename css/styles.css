@@ -4371,6 +4371,10 @@ button {
   display: none;
 }
 
+.section-rsvp .rsvp-form[hidden] {
+  display: none;
+}
+
 .section-rsvp .rsvp-field label {
   color: rgba(233, 221, 203, 0.84);
   font-family: var(--font-sans);

@@ -27,6 +27,8 @@ document.addEventListener('DOMContentLoaded', () => {
   const guestWelcomePeopleLabel = document.getElementById('guest-welcome-people-label');
   const guestContinueButton = document.getElementById('guest-continue-button');
   const rsvpGuestSummary = document.getElementById('rsvp-guest-summary');
+  const rsvpForm = document.getElementById('rsvpForm');
+  const rsvpFeedback = document.getElementById('rsvpFeedback');
   const rsvpPeople = document.getElementById('rsvpPeople');
   const rsvpPeopleDecrease = document.getElementById('rsvpPeopleDecrease');
   const rsvpPeopleIncrease = document.getElementById('rsvpPeopleIncrease');
@@ -58,6 +60,11 @@ document.addEventListener('DOMContentLoaded', () => {
     const capacityMessage = guestWelcomeCapacity.parentElement;
     capacityMessage.hidden = isHost;
     rsvpGuestSummary.hidden = isHost;
+    rsvpForm.hidden = !isHost && guest.yaConfirmo === true;
+
+    if (rsvpForm.hidden) {
+      showFormFeedback(rsvpFeedback, 'Esta invitación ya tiene una respuesta registrada. No se puede enviar otra.');
+    }
 
     if (!isHost) {
       guestWelcomeCapacity.textContent = String(capacity);
@@ -467,10 +474,8 @@ document.addEventListener('DOMContentLoaded', () => {
   const playlistArtist = document.getElementById('playlistArtist');
   const playlistFeedback = document.getElementById('playlistFeedback');
   const playlistSubmissionKey = document.getElementById('playlistSubmissionKey');
-  const rsvpForm = document.getElementById('rsvpForm');
   const rsvpAttendance = document.getElementById('rsvpAttendance');
   const rsvpPeopleField = document.getElementById('rsvpPeopleField');
-  const rsvpFeedback = document.getElementById('rsvpFeedback');
   const rsvpSubmissionKey = document.getElementById('rsvpSubmissionKey');
   const btnSuggestSong = document.getElementById('btnSuggestSong');
   const rsvpSubmitBtn = document.getElementById('rsvpSubmitBtn');
@@ -581,15 +586,12 @@ document.addEventListener('DOMContentLoaded', () => {
         });
         showFormFeedback(rsvpFeedback, result.duplicate
           ? 'Tu respuesta ya estaba registrada.'
-          : '¡Gracias! Tu respuesta quedó registrada.');
-        rsvpForm.reset();
-        rsvpPeopleField.hidden = true;
-        rsvpPeople.required = false;
-        updateRsvpPeopleControls();
-        rsvpSubmissionKey.value = newSubmissionKey();
+          : '¡Gracias! Tu respuesta quedó registrada. No se puede enviar otra.');
+        rsvpForm.hidden = true;
       } catch (error) {
         console.error('No se pudo guardar la confirmación de asistencia:', error);
         showFormFeedback(rsvpFeedback, error.message, true);
+        if (error.code === 'already_confirmed') rsvpForm.hidden = true;
       } finally {
         rsvpSubmitBtn.disabled = false;
       }
